@@ -21,6 +21,12 @@ Alternatively, open this repository directly as your Claude Code project and use
 
 After installing a skill, invoke it in Claude Code with the skill name and provide the relevant document, codebase, or project context.
 
+Not sure which skill fits? Start with `master-essence`. Describe what you want to understand or decide, and it will recommend a skill and give you a prompt to try.
+
+```text
+Use the master-essence skill to help me choose the right skill for my goal.
+```
+
 Example:
 
 ```text
