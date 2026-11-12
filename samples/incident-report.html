@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d13">
+  <title>Checkout incident report — Essence-Extract</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090d13;
+      --panel: #111923;
+      --line: #2a3745;
+      --text: #edf3f5;
+      --muted: #9cabb8;
+      --green: #b7f36b;
+      --blue: #70d7f0;
+      --amber: #ffbf78;
+      font: 14px/1.6 Inter, ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: radial-gradient(ellipse at 70% 0, #14212a, transparent 48%), var(--bg); }
+    main { width: min(940px, calc(100% - 36px)); margin: 0 auto; padding: 38px 0 64px; }
+    .eyebrow, .label { color: var(--green); font: 10px/1.5 "Cascadia Code", Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 9px 0 10px; font-size: clamp(32px, 6vw, 52px); letter-spacing: -.055em; line-height: 1.05; }
+    .subtitle { margin: 0; color: var(--muted); font-size: 13px; }
+    .summary, .visual-card, .section { margin-top: 20px; border: 1px solid var(--line); border-radius: 12px; background: rgba(17, 25, 35, .9); }
+    .summary { padding: 20px 22px; border-left: 3px solid var(--green); }
+    .summary h2, .section h2 { margin: 0 0 11px; font-size: 16px; }
+    .summary p { margin: 0; max-width: 780px; color: #d3dee4; }
+    .visual-card { position: relative; overflow: hidden; min-height: 200px; padding: 16px; }
+    .visual-card h2 { margin: 0 0 10px; font-size: 13px; }
+    .timeline { display: block; width: 100%; height: auto; min-height: 100px; }
+    .timeline text { fill: #aab9c5; font: 9px "Cascadia Code", Consolas, monospace; }
+    .timeline .event { fill: var(--green); stroke: #111923; stroke-width: 3; }
+    .timeline .alert { fill: var(--amber); }
+    .timeline .rule { stroke: #405162; stroke-width: 2; }
+    .orbit { position: absolute; top: 24px; right: 12px; width: 170px; height: 150px; opacity: .8; pointer-events: none; }
+    #evidence-scene { position: absolute; top: 18px; right: 0; width: 180px; height: 165px; }
+    .visual-fallback { position: absolute; top: 22px; right: 12px; width: 160px; height: 150px; }
+    .scene-ready .visual-fallback { opacity: 0; }
+    .section { padding: 19px 22px; }
+    .facts { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .fact { display: grid; grid-template-columns: 135px 1fr; gap: 12px; padding-top: 12px; border-top: 1px solid rgba(156, 171, 184, .14); }
+    .fact:first-child { padding-top: 0; border-top: 0; }
+    .fact strong { color: #dce8ed; font-size: 12px; }
+    .fact p { margin: 0; color: #c1cdd5; font-size: 12px; }
+    .evidence { display: block; margin-top: 5px; color: var(--blue); font: 10px/1.5 "Cascadia Code", Consolas, monospace; overflow-wrap: anywhere; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .callout { padding: 12px 14px; border: 1px solid #3c4650; border-radius: 8px; background: #0e151d; }
+    .callout p { margin: 6px 0 0; color: #c4d0d7; font-size: 12px; }
+    .callout.assumption { border-left: 3px solid var(--amber); }
+    .callout.risk { border-left: 3px solid #f47e76; }
+    .actions { margin: 0; padding-left: 18px; color: #c4d0d7; font-size: 12px; }
+    .actions li + li { margin-top: 7px; }
+    .actions strong { color: var(--green); font: 10px "Cascadia Code", Consolas, monospace; text-transform: uppercase; }
+    footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 25px; padding-top: 13px; border-top: 1px solid var(--line); color: #7f909f; font: 9px/1.6 "Cascadia Code", Consolas, monospace; }
+    @media (max-width: 650px) {
+      main { padding-top: 24px; }
+      .fact { grid-template-columns: 1fr; gap: 4px; }
+      .split { grid-template-columns: 1fr; }
+      .orbit, #evidence-scene, .visual-fallback { opacity: .28; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Incident essence / evidence brief</div>
+      <h1>Checkout API degradation</h1>
+      <p class="subtitle">Detected 10:03 · dashboard baseline restored 10:15 · root cause not confirmed</p>
+    </header>
+
+    <section class="summary" aria-labelledby="summary-title">
+      <h2 id="summary-title">Summary</h2>
+      <p>Checkout API errors were detected during the v2.18.0 deployment window and returned to baseline after rollback; the logs establish timing and impact counts, but not causality or final order/payment impact.</p>
+      <span class="evidence">Source: samples/incident-raw.log:1, 3, 7, 21, 24, 40, 46</span>
+    </section>
+
+    <section class="visual-card" aria-labelledby="timeline-title">
+      <h2 id="timeline-title">Verified incident timeline</h2>
+      <svg class="timeline" viewBox="0 0 860 116" role="img" aria-labelledby="timeline-caption">
+        <title id="timeline-caption">Deployment began at 10:01, alert fired at 10:03, rollback completed at 10:13, and the dashboard returned to baseline at 10:15.</title>
+        <line class="rule" x1="40" y1="48" x2="810" y2="48"/>
+        <circle class="event" cx="70" cy="48" r="7"/>
+        <circle class="event alert" cx="210" cy="48" r="7"/>
+        <circle class="event" cx="635" cy="48" r="7"/>
+        <circle class="event" cx="770" cy="48" r="7"/>
+        <text x="40" y="77">10:01 · release started</text>
+        <text x="170" y="26">10:03 · 5xx alert</text>
+        <text x="578" y="77">10:13 · rollback</text>
+        <text x="708" y="26">10:15 · baseline</text>
+      </svg>
+      <span class="evidence">Timeline source: samples/incident-raw.log:1, 3, 21, 24</span>
+      <canvas id="evidence-scene" aria-label="Three-dimensional evidence network visualization"></canvas>
+      <svg class="visual-fallback" viewBox="0 0 160 150" role="img" aria-label="Evidence nodes linked to the incident finding">
+        <circle cx="80" cy="75" r="46" fill="none" stroke="#70d7f0" stroke-opacity=".38"/>
+        <circle cx="80" cy="75" r="25" fill="#16242b" stroke="#b7f36b"/>
+        <circle cx="24" cy="49" r="4" fill="#70d7f0"/>
+        <circle cx="130" cy="32" r="4" fill="#b7f36b"/>
+        <circle cx="136" cy="111" r="4" fill="#ffbf78"/>
+        <path d="M28 51 59 67M126 35 99 61M132 108 99 87" stroke="#7895a2" stroke-width="1"/>
+      </svg>
+    </section>
+
+    <section class="section" aria-labelledby="facts-title">
+      <h2 id="facts-title">Verified facts</h2>
+      <ul class="facts">
+        <li class="fact">
+          <strong>Impact</strong>
+          <p>Checkout API 5xx reached 14.8%; 312 failed checkout requests were counted in the alert window.
+            <span class="evidence">samples/incident-raw.log:3, 40</span>
+          </p>
+        </li>
+        <li class="fact">
+          <strong>Timeline</strong>
+          <p>v2.18.0 deployment completed at 10:05; rollback to v2.17.4 completed at 10:13; baseline 5xx was reported at 10:15.
+            <span class="evidence">samples/incident-raw.log:7, 21, 24</span>
+          </p>
+        </li>
+        <li class="fact">
+          <strong>Observed condition</strong>
+          <p>The checkout writer pool was reported at 100% utilization while API requests timed out waiting for a connection.
+            <span class="evidence">samples/incident-raw.log:8-10</span>
+          </p>
+        </li>
+        <li class="fact">
+          <strong>Response</strong>
+          <p>The on-call initiated a rollback; the error rate and connection wait time declined afterward.
+            <span class="evidence">samples/incident-raw.log:16-24</span>
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <div class="split">
+      <section class="section" aria-labelledby="assumptions-title">
+        <h2 id="assumptions-title">Unverified assumptions</h2>
+        <div class="callout assumption">
+          <strong>A change in v2.18.0 caused the connection-pool saturation.</strong>
+          <p>The release started before the alert but completed afterward; rollback preceded recovery, and no trace or code comparison confirms causality.</p>
+          <span class="evidence">Basis: samples/incident-raw.log:1, 3, 7, 21, 24, 46</span>
+        </div>
+        <div class="callout assumption" style="margin-top: 10px">
+          <strong>Every failed request corresponds to a failed order.</strong>
+          <p>The logs do not establish order outcomes for timed-out or retried requests.</p>
+          <span class="evidence">Basis: samples/incident-raw.log:37, 40-42</span>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="risks-title">
+        <h2 id="risks-title">Residual risks</h2>
+        <div class="callout risk">
+          <strong>Duplicate or delayed order/payment outcomes remain unresolved.</strong>
+          <p>Reconciliation and the duplicate-capture query were still pending; severity is unknown.</p>
+          <span class="evidence">samples/incident-raw.log:36-37, 45-46</span>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" aria-labelledby="actions-title">
+      <h2 id="actions-title">Recommended actions</h2>
+      <ol class="actions">
+        <li><strong>Proposed</strong> — Compare connection-pool metrics and request traces across v2.18.0 and v2.17.4.</li>
+        <li><strong>In progress</strong> — Complete payment/order reconciliation and confirm whether retries created duplicate or delayed outcomes.</li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="questions-title">
+      <h2 id="questions-title">Open questions</h2>
+      <ul class="actions">
+        <li>What code or configuration change, if any, caused connection-pool saturation?</li>
+        <li>Did any timed-out or retried checkout create an order or duplicate capture?</li>
+        <li>What is the final count of affected users or unique orders?</li>
+      </ul>
+    </section>
+
+    <footer><span>Generated from samples/incident-raw.log</span><span>Machine-readable payload: #essence-data</span></footer>
+  </main>
+
+  <script type="application/json" id="essence-data">
+{
+  "skill": "incident-essence",
+  "summary": "Checkout API errors were detected during the v2.18.0 deployment window and returned to baseline after rollback; the logs establish timing and impact counts, but not causality or final order/payment impact.",
+  "verified_facts": [
+    {
+      "category": "impact",
+      "statement": "Checkout API 5xx reached 14.8%; 312 failed checkout requests were counted in the alert window.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 3",
+          "quote": "[10:03:11] alertmanager: CheckoutHigh5xx fired, current 5xx 14.8%"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 40",
+          "quote": "[10:40:01] incident lead: 312 failed checkout requests in alert window"
+        }
+      ]
+    },
+    {
+      "category": "timeline",
+      "statement": "Version v2.18.0 deployment completed at 10:05; rollback to v2.17.4 completed at 10:13; the dashboard reported baseline 5xx by 10:15.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 7",
+          "quote": "[10:05:01] deploy-bot: release v2.18.0 completed"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 21",
+          "quote": "[10:13:02] deploy-bot: rollback to v2.17.4 completed"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 24",
+          "quote": "[10:15:16] dashboard: checkout 5xx 0.2%, baseline restored"
+        }
+      ]
+    },
+    {
+      "category": "contributing_condition",
+      "statement": "The checkout writer pool was reported at 100% utilization while API requests timed out waiting for a connection.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 8-10",
+          "quote": "[10:05:44] db-pool: checkout writer pool 100% utilized\n[10:06:03] api-log: timeout waiting for connection (request_id=7f2a)\n[10:06:19] api-log: timeout waiting for connection (request_id=7f31)"
+        }
+      ]
+    },
+    {
+      "category": "response",
+      "statement": "The on-call initiated a rollback; the error rate and connection wait time declined afterward.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 16-23",
+          "quote": "[10:09:56] on-call: starting rollback of checkout-api\n[10:10:22] deploy-bot: rollback requested, target v2.17.4\n[10:11:03] api-log: writer pool still 100% utilized\n[10:11:44] incident chat: could be retries holding connections, unconfirmed\n[10:12:30] status-page: checkout degraded, investigation ongoing\n[10:13:02] deploy-bot: rollback to v2.17.4 completed\n[10:13:28] dashboard: checkout 5xx 7.1%, trending down\n[10:14:04] api-log: connection wait time declining"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 24",
+          "quote": "[10:15:16] dashboard: checkout 5xx 0.2%, baseline restored"
+        }
+      ]
+    }
+  ],
+  "unverified_assumptions": [
+    {
+      "statement": "A change in v2.18.0 caused the connection-pool saturation.",
+      "why_unverified": "The release started before the alert but completed afterward; rollback preceded recovery, and no trace or code comparison confirms causality."
+    },
+    {
+      "statement": "Every failed request corresponds to a failed order.",
+      "why_unverified": "The logs do not establish order outcomes for timed-out or retried requests."
+    }
+  ],
+  "residual_risks": [
+    {
+      "statement": "Duplicate or delayed order/payment outcomes remain unresolved while reconciliation is pending.",
+      "severity": "unknown",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 36-37, 45-46",
+          "quote": "[10:31:15] payments: reconciliation still pending\n[10:33:40] support: some users may have retried; order outcomes unclear\n[10:54:20] payments: duplicate-capture query is still running\n[10:57:10] on-call: leave root cause as unknown pending trace review"
+        }
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Compare connection-pool metrics and request traces across v2.18.0 and v2.17.4.",
+      "status": "proposed",
+      "owner": null
+    },
+    {
+      "action": "Complete payment/order reconciliation and confirm whether retries created duplicate or delayed outcomes.",
+      "status": "in_progress",
+      "owner": null
+    }
+  ],
+  "open_questions": [
+    "What code or configuration change, if any, caused connection-pool saturation?",
+    "Did any timed-out or retried checkout create an order or duplicate capture?",
+    "What is the final count of affected users or unique orders?"
+  ]
+}
+  </script>
+  <script type="module">
+    const canvas = document.getElementById("evidence-scene");
+    const visual = canvas.closest(".visual-card");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try {
+      const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js");
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.4));
+      renderer.setSize(180, 165, false);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, 180 / 165, 0.1, 30);
+      camera.position.z = 5;
+      const group = new THREE.Group();
+      scene.add(group);
+      group.add(new THREE.Mesh(
+        new THREE.IcosahedronGeometry(0.65, 2),
+        new THREE.MeshBasicMaterial({ color: 0x70d7f0, wireframe: true, transparent: true, opacity: 0.68 }),
+      ));
+      group.add(new THREE.Mesh(
+        new THREE.TorusGeometry(1.05, 0.008, 8, 80),
+        new THREE.MeshBasicMaterial({ color: 0xb7f36b, transparent: true, opacity: 0.55 }),
+      ));
+      for (let index = 0; index < 8; index += 1) {
+        const angle = index * Math.PI / 4;
+        const dot = new THREE.Mesh(
+          new THREE.SphereGeometry(0.045, 10, 8),
+          new THREE.MeshBasicMaterial({ color: index % 2 ? 0xb7f36b : 0xffbf78 }),
+        );
+        dot.position.set(Math.cos(angle) * 1.05, Math.sin(angle) * 0.5, Math.sin(angle) * 0.3);
+        group.add(dot);
+      }
+      visual.classList.add("scene-ready");
+      const render = (time) => {
+        if (!reducedMotion) {
+          group.rotation.y = time * 0.00015;
+          group.rotation.x = Math.sin(time * 0.00013) * 0.1;
+          window.requestAnimationFrame(render);
+        }
+        renderer.render(scene, camera);
+      };
+      render(0);
+    } catch {
+      canvas.style.display = "none";
+      canvas.setAttribute("aria-hidden", "true");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "route-incident-evidence",
+    "input": "Summarize this production outage timeline, customer impact, and follow-up from the attached incident log.",
+    "expected_skill": "incident-essence",
+    "must_not_claim": [
+      "The deploy caused the outage",
+      "312 orders failed",
+      "No duplicate captures occurred"
+    ]
+  },
+  {
+    "id": "route-code-conventions",
+    "input": "Inspect this repository and extract repeated coding conventions with file and line evidence.",
+    "expected_skill": "code-essence",
+    "must_not_claim": [
+      "A convention is project-wide based on a single example"
+    ]
+  },
+  {
+    "id": "route-architecture",
+    "input": "Map the services, boundaries, and data flows in this codebase and cite the source lines.",
+    "expected_skill": "architecture-essence",
+    "must_not_claim": [
+      "A component relationship without source evidence"
+    ]
+  },
+  {
+    "id": "route-decision-record",
+    "input": "Compare the options in this proposal, explain the trade-offs, and draft an ADR if requested.",
+    "expected_skill": "decision-essence",
+    "must_not_claim": [
+      "A rationale or option absent from the source"
+    ]
+  }
+]

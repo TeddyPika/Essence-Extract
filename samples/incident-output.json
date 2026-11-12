@@ -1,0 +1,110 @@
+{
+  "skill": "incident-essence",
+  "summary": "Checkout API errors were detected during the v2.18.0 deployment window and returned to baseline after rollback; the logs establish timing and impact counts, but not causality or final order/payment impact.",
+  "verified_facts": [
+    {
+      "category": "impact",
+      "statement": "Checkout API 5xx reached 14.8%; 312 failed checkout requests were counted in the alert window.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 3",
+          "quote": "[10:03:11] alertmanager: CheckoutHigh5xx fired, current 5xx 14.8%"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 40",
+          "quote": "[10:40:01] incident lead: 312 failed checkout requests in alert window"
+        }
+      ]
+    },
+    {
+      "category": "timeline",
+      "statement": "Version v2.18.0 deployment completed at 10:05; rollback to v2.17.4 completed at 10:13; the dashboard reported baseline 5xx by 10:15.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 7",
+          "quote": "[10:05:01] deploy-bot: release v2.18.0 completed"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 21",
+          "quote": "[10:13:02] deploy-bot: rollback to v2.17.4 completed"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 24",
+          "quote": "[10:15:16] dashboard: checkout 5xx 0.2%, baseline restored"
+        }
+      ]
+    },
+    {
+      "category": "contributing_condition",
+      "statement": "The checkout writer pool was reported at 100% utilization while API requests timed out waiting for a connection.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 8-10",
+          "quote": "[10:05:44] db-pool: checkout writer pool 100% utilized\n[10:06:03] api-log: timeout waiting for connection (request_id=7f2a)\n[10:06:19] api-log: timeout waiting for connection (request_id=7f31)"
+        }
+      ]
+    },
+    {
+      "category": "response",
+      "statement": "The on-call initiated a rollback; the error rate and connection wait time declined afterward.",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 16-23",
+          "quote": "[10:09:56] on-call: starting rollback of checkout-api\n[10:10:22] deploy-bot: rollback requested, target v2.17.4\n[10:11:03] api-log: writer pool still 100% utilized\n[10:11:44] incident chat: could be retries holding connections, unconfirmed\n[10:12:30] status-page: checkout degraded, investigation ongoing\n[10:13:02] deploy-bot: rollback to v2.17.4 completed\n[10:13:28] dashboard: checkout 5xx 7.1%, trending down\n[10:14:04] api-log: connection wait time declining"
+        },
+        {
+          "source": "samples/incident-raw.log",
+          "location": "line 24",
+          "quote": "[10:15:16] dashboard: checkout 5xx 0.2%, baseline restored"
+        }
+      ]
+    }
+  ],
+  "unverified_assumptions": [
+    {
+      "statement": "A change in v2.18.0 caused the connection-pool saturation.",
+      "why_unverified": "The release started before the alert but completed afterward; rollback preceded recovery, and no trace or code comparison confirms causality."
+    },
+    {
+      "statement": "Every failed request corresponds to a failed order.",
+      "why_unverified": "The logs do not establish order outcomes for timed-out or retried requests."
+    }
+  ],
+  "residual_risks": [
+    {
+      "statement": "Duplicate or delayed order/payment outcomes remain unresolved while reconciliation is pending.",
+      "severity": "unknown",
+      "evidence": [
+        {
+          "source": "samples/incident-raw.log",
+          "location": "lines 36-37, 45-46",
+          "quote": "[10:31:15] payments: reconciliation still pending\n[10:33:40] support: some users may have retried; order outcomes unclear\n[10:54:20] payments: duplicate-capture query is still running\n[10:57:10] on-call: leave root cause as unknown pending trace review"
+        }
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Compare connection-pool metrics and request traces across v2.18.0 and v2.17.4.",
+      "status": "proposed",
+      "owner": null
+    },
+    {
+      "action": "Complete payment/order reconciliation and confirm whether retries created duplicate or delayed outcomes.",
+      "status": "in_progress",
+      "owner": null
+    }
+  ],
+  "open_questions": [
+    "What code or configuration change, if any, caused connection-pool saturation?",
+    "Did any timed-out or retried checkout create an order or duplicate capture?",
+    "What is the final count of affected users or unique orders?"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "essence-extract",
+  "displayName": "Essence Extract",
+  "version": "1.0.0",
+  "description": "Evidence-first engineering skills that return HTML reports with embedded structured data.",
+  "author": {
+    "name": "TeddyPika"
+  },
+  "repository": "https://github.com/TeddyPika/Essence-Extract",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "incident-response",
+    "architecture",
+    "evidence",
+    "structured-output"
+  ],
+  "skills": [
+    "./.claude/skills/",
+    "./extras/skills/"
+  ]
+}

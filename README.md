@@ -1,86 +1,94 @@
-<h1 align="center">
-  <img src="assets/essence-extract-logo.svg" alt="" width="96" height="96"><br>
-  Essence-Extract
-</h1>
+<div align="center">
+  <img src="assets/essence-extract-logo.svg" alt="" width="80" height="80">
 
-## Overview
+  # Essence-Extract
 
-Essence-Extract gives Claude a structured way to turn raw information into concise, evidence-based summaries. Each skill is designed to focus on a specific kind of extraction task without inventing conclusions or drifting into unsupported assumptions.
+  **Evidence-first workflows for Claude Code.**
 
-## Installation
+  Turn incident logs, codebases, decisions, and product evidence into clear HTML reports with inline SVG, optional Three.js visuals, and embedded structured data.
 
-Choose the skill(s) you want and copy them into your project's `.claude/skills/` directory:
+  [View the interactive site](index.html) · [Browse the embedded-data schema](schemas/essence-output.schema.json) · [See the incident report](samples/incident-report.html)
+</div>
+
+## Why use it
+
+- **Predictable output:** every skill returns HTML with the same embedded data contract.
+- **Auditable claims:** repository findings cite exact paths and line numbers; other sources cite sections, timestamps, or page locations.
+- **Less setup:** choose a persona bundle or a few individual skills instead of copying folders by hand.
+- **Useful follow-through:** request an ADR or postmortem draft and the relevant skill can create the artifact in your repo.
+
+## Install
+
+### Claude Code plugin
+
+Add the marketplace once, then install the complete skill suite:
+
+```text
+/plugin marketplace add TeddyPika/Essence-Extract
+/plugin install essence-extract@essence-extract
+```
+
+Or use Claude Code's CLI:
 
 ```bash
-mkdir -p .claude/skills
-cp -R /path/to/Essence-Extract/.claude/skills/<skill-name> .claude/skills/
+claude plugin marketplace add TeddyPika/Essence-Extract
+claude plugin install essence-extract@essence-extract
 ```
 
-Alternatively, open this repository directly as your Claude Code project and use the skills from there.
+### Interactive installer
 
-## Usage
+With Node.js 18+, run this from the project where you want the selected skills:
 
-After installing a skill, invoke it in Claude Code with the skill name and provide the relevant document, codebase, or project context.
+```bash
+npx --yes --package=github:TeddyPika/Essence-Extract essence-extract
+```
 
-Not sure which skill fits? Start with `master-essence`. Describe your goal and provide the relevant material; it routes your request to the best-fit skill and completes the task. It asks a follow-up only when clarification is needed.
+Choose a persona bundle (`core`, `sre`, `product`, or `extras`), `all`, or a comma-separated list such as `code-essence, incident-essence`. Existing skills are never replaced without confirmation.
+
+For local development, run the installer directly:
+
+```bash
+node scripts/install.mjs
+```
+
+## Persona bundles
+
+| Bundle | Skills | Best for |
+| --- | --- | --- |
+| **Core engineering** (4) | `code-essence`, `architecture-essence`, `decision-essence`, `validation-essence` | Code conventions, system maps, ADRs, and evidence-backed validation |
+| **SRE & incidents** (3) | `incident-essence`, `root-cause-essence`, `security-essence` | Impact summaries, causal analysis, and security posture |
+| **Product & strategy** (4) | `user-need-essence`, `metrics-essence`, `risk-essence`, `roi-essence` | User evidence, KPIs, trade-offs, and returns |
+| **Specialist extras** (8) | `vanilla-essence`, `research-essence`, `policy-essence`, `safe-ai-essence`, `rubric-essence`, `web-design-essence`, `game-design-essence`, `stock-essence` | Research, governance, design, and financial analysis |
+
+`master-essence` routes to the best-fit skill and is available individually or in the full install. `stock-essence` and `game-design-essence` live under [`extras/skills/`](extras/skills/).
+
+## Use
+
+Ask Claude Code to invoke a skill with the relevant repository or source material:
 
 ```text
-Use master-essence to analyze this report and explain the main risks.
+Use code-essence on this repository. Cite each convention with file paths and line numbers.
+Use incident-essence on samples/incident-raw.log.
+Use decision-essence to compare these options and save the approved decision as an ADR.
 ```
 
-Example:
+To draft files, explicitly ask the skill to create them. `decision-essence` checks `docs/adr/` and creates the next `NNNN-title.md`; `incident-essence` drafts under `docs/postmortems/`. Neither writes an artifact unless requested.
 
-```text
-Use the vanilla-essence skill on this document.
-```
+## Output contract
 
-```text
-Use the code-essence skill on this repository and explain the main coding patterns.
-```
+By default, every skill returns a complete HTML5 report with semantic sections for summary, verified facts, unverified assumptions, residual risks, recommended actions, and open questions. Each page embeds a JSON object in `<script type="application/json" id="essence-data">`; this object follows the strict schema, so it remains machine-readable without making bare JSON the user-facing report.
 
-
-## Available Skills
-
-| Skill | Purpose |
+| Key | Purpose |
 | --- | --- |
-| `vanilla-essence` | Summarize a document into a brief main takeaway and supporting key points. |
-| `code-essence` | Extract coding patterns, conventions, and practices from code or a codebase. |
-| `roi-essence` | Identify ROI, payback, and break-even logic based on the available evidence. |
-| `safe-ai-essence` | Extract safety goals, risk areas, guardrails, and residual concerns from AI system descriptions and policies. |
-| `security-essence` | Summarize security posture, assets, threats, controls, and gaps from technical or policy materials. |
-| `risk-essence` | Surface key risks, trade-offs, and failure modes from proposals, reports, and design docs. |
-| `decision-essence` | Capture the decision being made, options considered, and reasoning behind the chosen path. |
-| `policy-essence` | Reduce policies or compliance documents to rules, obligations, exceptions, and enforcement points. |
-| `architecture-essence` | Extract system components, responsibilities, and relationships from code or design documents. |
-| `web-design-essence` | Analyze a webpage or interface for hierarchy, layout, flow, and overall user experience. |
-| `game-design-essence` | Extract the core player fantasy, gameplay loop, progression, and design intent from game design materials. |
-| `user-need-essence` | Turn interviews, tickets, and feedback into the underlying user problems and requirements. |
-| `stock-essence` | Extract financial trends, business drivers, and market context from earnings reports and related commentary. |
-| `validation-essence` | Assess whether a project, change, or claim is supported by meaningful tests, checks, and validation evidence. |
-| `research-essence` | Synthesize the main findings, evidence, and uncertainty from research materials and source documents. |
-| `metrics-essence` | Interpret KPI levels and trends while accounting for metric definitions, context, and limitations. |
-| `incident-essence` | Summarize incident impact, timeline, contributing factors, response, and follow-up actions. |
-| `root-cause-essence` | Trace a failure's underlying and contributing causes, separating evidence from hypotheses. |
-| `rubric-essence` | Clarify evaluation criteria, scoring levels, rules, and ambiguities in a rubric. |
-| `master-essence` | Automatically route a request to the best-fit Essence skill and carry out the task. |
+| `skill`, `summary` | Selected skill and concise result |
+| `verified_facts` | Supported findings with category and source/location/quote evidence |
+| `unverified_assumptions` | Plausible but unconfirmed statements and why they remain unverified |
+| `residual_risks` | Evidence-backed remaining risks, with severity (`low`, `medium`, `high`, `unknown`) |
+| `recommended_actions` | Next steps with status and owner (or `null`) |
+| `open_questions` | Material questions the evidence cannot answer |
 
-## Choosing Between Related Skills
-
-Some skills cover adjacent topics. Use the one that matches the main question:
-
-- **`master-essence`:** Use this if you are unsure which skill fits or want automatic routing. It selects the best fit and carries out the task, asking for clarification only when needed.
-- **`vanilla-essence` or `research-essence`:** Use `vanilla-essence` to summarize one document. Use `research-essence` to synthesize findings across sources, including disagreements and uncertainty. For interviews or feedback, use `user-need-essence` to identify user problems and requirements.
-- **`code-essence` or `architecture-essence`:** Use `code-essence` to identify coding practices and conventions. Use `architecture-essence` to explain system components, responsibilities, and interactions.
-- **`web-design-essence` or `game-design-essence`:** Use `web-design-essence` to evaluate page hierarchy, layout, interaction flow, and interface intent. Use `game-design-essence` to extract player fantasy, loops, progression, and system design from game docs.
-- **`game-design-essence` or `user-need-essence`:** Use `game-design-essence` to extract gameplay fantasy, loops, progression, and design intent from game docs. Use `user-need-essence` for broader player or user needs outside a game-design context.
-- **`decision-essence`, `risk-essence`, or `architecture-essence`:** Use `decision-essence` to explain a choice and its rationale, `risk-essence` to assess uncertainties and failure modes, and `architecture-essence` to describe system structure.
-- **`risk-essence`, `security-essence`, or `safe-ai-essence`:** Use `risk-essence` for broad project or proposal risks, `security-essence` for system assets, threats, and security controls, and `safe-ai-essence` for AI-specific harms, safeguards, intended use, and governance.
-- **`policy-essence` or `safe-ai-essence`:** Use `policy-essence` for general rules, obligations, and exceptions. Use `safe-ai-essence` for safety practices and remaining risks in AI systems; use both when assessing an AI system against a policy.
-- **`roi-essence` or `stock-essence`:** Use `roi-essence` for an investment or project's costs, benefits, and returns. Use `stock-essence` for a company's revenue performance and related business or market context.
-- **`validation-essence` or `security-essence`:** Use `validation-essence` to assess whether tests or checks provide convincing evidence. Use `security-essence` to assess the security posture itself.
-- **`metrics-essence` or `stock-essence`:** Use `metrics-essence` to interpret a set of measures or KPIs. Use `stock-essence` for company revenue performance and related business or market context.
-- **`incident-essence` or `root-cause-essence`:** Use `incident-essence` for the overall incident story, impact, response, and follow-up. Use `root-cause-essence` to analyze why a failure occurred and how strong the causal evidence is.
+Use inline SVG for relevant timelines or relationships. Three.js is available for interactive visualizations with a static SVG fallback; it should enhance the report, never carry required facts. Escape source text in HTML and JSON. Empty arrays mean no supported items; the skills must not fill gaps with invented facts. Ask for another format explicitly when needed.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+MIT. See [LICENSE](LICENSE).

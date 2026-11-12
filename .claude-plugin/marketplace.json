@@ -1,0 +1,14 @@
+{
+  "name": "essence-extract",
+  "description": "Evidence-first engineering workflows for Claude Code",
+  "owner": {
+    "name": "TeddyPika"
+  },
+  "plugins": [
+    {
+      "name": "essence-extract",
+      "source": ".",
+      "description": "Install structured engineering, SRE, product, research, and design skills."
+    }
+  ]
+}

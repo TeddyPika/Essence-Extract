@@ -1,0 +1,50 @@
+[10:01:14] deploy-bot: release checkout-api v2.18.0 started
+[10:02:06] dashboard: checkout-api 5xx 0.2% (baseline 0.1%)
+[10:03:11] alertmanager: CheckoutHigh5xx fired, current 5xx 14.8%
+[10:03:18] on-call: looking; checkout is slow for some users
+[10:04:02] gateway: 83 requests returned 502 since 10:03
+[10:04:17] support: reports of checkout spinner, region not specified
+[10:05:01] deploy-bot: release v2.18.0 completed
+[10:05:44] db-pool: checkout writer pool 100% utilized
+[10:06:03] api-log: timeout waiting for connection (request_id=7f2a)
+[10:06:19] api-log: timeout waiting for connection (request_id=7f31)
+[10:07:08] on-call: maybe migration? no one has checked yet
+[10:07:40] database: no migration job recorded in this window
+[10:08:12] dashboard: catalog-api remains at 0.1% 5xx
+[10:08:43] support: one customer says order button did nothing
+[10:09:10] payments: captured events normal; reconciliation not complete
+[10:09:56] on-call: starting rollback of checkout-api
+[10:10:22] deploy-bot: rollback requested, target v2.17.4
+[10:11:03] api-log: writer pool still 100% utilized
+[10:11:44] incident chat: could be retries holding connections, unconfirmed
+[10:12:30] status-page: checkout degraded, investigation ongoing
+[10:13:02] deploy-bot: rollback to v2.17.4 completed
+[10:13:28] dashboard: checkout 5xx 7.1%, trending down
+[10:14:04] api-log: connection wait time declining
+[10:15:16] dashboard: checkout 5xx 0.2%, baseline restored
+[10:16:09] on-call: error rate looks normal; watching for recurrence
+[10:17:21] support: 11 tickets tagged checkout, duplicates possible
+[10:18:02] payments: no duplicate captures observed so far
+[10:19:17] database: writer pool 64% utilized
+[10:20:09] incident chat: rollback appears to have helped
+[10:21:36] deploy-bot: no further deploys planned during investigation
+[10:22:05] status-page: checkout service operational
+[10:23:48] support: ticket count now 14; ticket count is not unique orders
+[10:25:10] on-call: need compare v2.18.0 connection handling
+[10:27:33] database: pool utilization 58%
+[10:29:02] incident lead: impact window estimated 10:03-10:15 from dashboard
+[10:31:15] payments: reconciliation still pending
+[10:33:40] support: some users may have retried; order outcomes unclear
+[10:35:12] api-log: no new timeout events since rollback
+[10:37:56] incident chat: migration theory unsupported; no migration found
+[10:40:01] incident lead: 312 failed checkout requests in alert window
+[10:42:18] on-call: checking if any requests created orders before timing out
+[10:45:27] database: no writer errors after 10:15
+[10:48:03] support: ticket 14 is about a delayed confirmation email
+[10:51:44] incident lead: don't call this a payment incident yet
+[10:54:20] payments: duplicate-capture query is still running
+[10:57:10] on-call: leave root cause as unknown pending trace review
+[10:59:32] status-page: incident resolved, follow-up investigation continues
+[11:00:14] incident lead: action to inspect pool metrics by release, owner TBD
+[11:01:03] dashboard: checkout 5xx remains at 0.2%
+[11:02:00] incident lead: review scheduled for next on-call handoff

@@ -1,0 +1,19 @@
+{
+  "name": "essence-extract",
+  "version": "1.0.0",
+  "description": "Interactive installer for Essence-Extract Claude Code skills",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "essence-extract": "./scripts/install.mjs"
+  },
+  "files": [
+    ".claude/skills",
+    "extras/skills",
+    "scripts/install.mjs",
+    "schemas/essence-output.schema.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
