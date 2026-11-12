@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Essence-Extract perfume bottle logo</title>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a253f"/>
+      <stop offset="1" stop-color="#21152a"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3d4"/>
+      <stop offset="1" stop-color="#e8b978"/>
+    </linearGradient>
+    <clipPath id="bottle">
+      <path d="M46 43h36v10c13 7 19 16 19 28v17c0 6-5 11-11 11H37c-6 0-11-5-11-11V81c0-12 6-21 20-28z"/>
+    </clipPath>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="30" fill="url(#background)"/>
+  <path d="M50 17h28v17H50z" fill="#d9a85f"/>
+  <path d="M53 34h22v12H53z" fill="#f2d69b"/>
+  <path d="M46 43h36v10c13 7 19 16 19 28v17c0 6-5 11-11 11H37c-6 0-11-5-11-11V81c0-12 6-21 20-28z" fill="url(#glass)" stroke="#ffedc5" stroke-linejoin="round" stroke-width="2"/>
+  <path d="M27 81c22-5 52-5 72 0v18c0 6-5 10-11 10H38c-6 0-11-4-11-10z" clip-path="url(#bottle)" fill="#b96b65"/>
+  <path d="M36 73v22M43 69v29" fill="none" stroke="#fff9e9" stroke-linecap="round" stroke-width="3" opacity=".8"/>
+  <path d="m93 38 3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#f7d58d"/>
+</svg>

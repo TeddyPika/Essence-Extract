@@ -1,4 +1,7 @@
-# Essence-Extract
+<h1 align="center">
+  <img src="assets/essence-extract-logo.svg" alt="" width="96" height="96"><br>
+  Essence-Extract
+</h1>
 
 A curated collection of Claude Code skills for extracting key meaning from documents, code, and strategic artifacts.
 
@@ -36,6 +39,7 @@ Use the vanilla-essence skill on this document.
 ```text
 Use the code-essence skill on this repository and explain the main coding patterns.
 ```
+
 
 ## Available Skills
 
