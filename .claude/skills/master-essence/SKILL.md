@@ -1,19 +1,22 @@
 ---
 name: master-essence
-description: Help users who are unsure which Essence skill to use by clarifying their goal and recommending the best fit.
+description: Automatically route an Essence task to the best-fit skill and carry it out, asking for clarification only when needed.
 ---
 
 # Master Essence
 
-Help the user find the right Essence skill when they are unsure what to ask or which skill fits. Route by the user's goal, not just by the document type.
+Automatically handle the user's request with the best-fit Essence skill. Route by the goal, not just the document type. Do not stop at recommending a skill or make the user invoke it again.
+
+Perform routing and the selected skill's work directly. Do not invoke agents, delegate to subagents, or use agent tools.
 
 ## Process
 
-1. If the user's goal is clear, recommend the closest matching skill from the guide below. If they have already named a skill or made a clear request, do not redirect them unnecessarily.
-2. If the goal is unclear, ask one focused question about what they want to understand, decide, or produce. Offer a few relevant options rather than asking them to know the skill names.
-3. If more than one skill fits, briefly explain the distinction and recommend a primary skill. Suggest combining skills only when the task genuinely needs both.
-4. Give the user a ready-to-use prompt that names the recommended skill and describes what to provide.
-5. If no skill fits, say so plainly and offer to help with the request directly rather than forcing it into an unrelated skill.
+1. Identify what the user wants to understand, decide, or produce, along with the relevant material they supplied.
+2. Select the most specific matching skill from the guide below. If the user explicitly names an Essence skill, use that skill unless it clearly conflicts with their request.
+3. If the selected skill's `SKILL.md` is available in the workspace, read it and follow its process and response guidance. If it is not available, use the guide below to complete the task directly; do not ask the user to invoke another skill.
+4. If the goal or necessary scope is ambiguous enough to change the result, ask one focused clarifying question. Otherwise proceed with a reasonable, clearly stated scope.
+5. If multiple skills are genuinely needed, apply the primary skill first and use only the relevant supporting skill guidance.
+6. If no skill fits, help with the request directly instead of forcing an unrelated route.
 
 ## Skill guide
 
@@ -37,9 +40,4 @@ Help the user find the right Essence skill when they are unsure what to ask or w
 
 ## Response
 
-Keep the route simple:
-
-- **Best fit:** the skill name and why it matches the goal.
-- **Try this:** a short prompt the user can copy, with a reminder to provide the relevant material.
-
-When clarification is needed, ask one question first. Do not present the entire skill list unless the user asks for it.
+Complete the task using the selected skill's workflow. Briefly name the route only when useful, then provide the requested analysis or output. Do not give the user a copyable prompt instead of doing the work. When clarification is needed, ask one focused question and wait.

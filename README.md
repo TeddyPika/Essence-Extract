@@ -24,10 +24,10 @@ Alternatively, open this repository directly as your Claude Code project and use
 
 After installing a skill, invoke it in Claude Code with the skill name and provide the relevant document, codebase, or project context.
 
-Not sure which skill fits? Start with `master-essence`. Describe what you want to understand or decide, and it will recommend a skill and give you a prompt to try.
+Not sure which skill fits? Start with `master-essence`. Describe your goal and provide the relevant material; it routes your request to the best-fit skill and completes the task. It asks a follow-up only when clarification is needed.
 
 ```text
-Use the master-essence skill to help me choose the right skill for my goal.
+Use master-essence to analyze this report and explain the main risks.
 ```
 
 Example:
@@ -62,13 +62,13 @@ Use the code-essence skill on this repository and explain the main coding patter
 | `incident-essence` | Summarize incident impact, timeline, contributing factors, response, and follow-up actions. |
 | `root-cause-essence` | Trace a failure's underlying and contributing causes, separating evidence from hypotheses. |
 | `rubric-essence` | Clarify evaluation criteria, scoring levels, rules, and ambiguities in a rubric. |
-| `master-essence` | Help users who are unsure which Essence skill to use by clarifying their goal and recommending a fit. |
+| `master-essence` | Automatically route a request to the best-fit Essence skill and carry out the task. |
 
 ## Choosing Between Related Skills
 
 Some skills cover adjacent topics. Use the one that matches the main question:
 
-- **`master-essence`:** Use this as a starting point if you are unsure which skill fits. It asks about your goal and recommends a skill and prompt.
+- **`master-essence`:** Use this if you are unsure which skill fits or want automatic routing. It selects the best fit and carries out the task, asking for clarification only when needed.
 - **`vanilla-essence` or `research-essence`:** Use `vanilla-essence` to summarize one document. Use `research-essence` to synthesize findings across sources, including disagreements and uncertainty. For interviews or feedback, use `user-need-essence` to identify user problems and requirements.
 - **`code-essence` or `architecture-essence`:** Use `code-essence` to identify coding practices and conventions. Use `architecture-essence` to explain system components, responsibilities, and interactions.
 - **`decision-essence`, `risk-essence`, or `architecture-essence`:** Use `decision-essence` to explain a choice and its rationale, `risk-essence` to assess uncertainties and failure modes, and `architecture-essence` to describe system structure.
