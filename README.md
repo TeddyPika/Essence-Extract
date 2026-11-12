@@ -3,8 +3,6 @@
   Essence-Extract
 </h1>
 
-A curated collection of Claude Code skills for extracting key meaning from documents, code, and strategic artifacts.
-
 ## Overview
 
 Essence-Extract gives Claude a structured way to turn raw information into concise, evidence-based summaries. Each skill is designed to focus on a specific kind of extraction task without inventing conclusions or drifting into unsupported assumptions.
