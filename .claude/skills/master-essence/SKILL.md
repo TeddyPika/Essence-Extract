@@ -25,6 +25,7 @@ Perform routing and the selected skill's work directly. Do not invoke agents, de
 - **`user-need-essence`** — Turn interviews, tickets, or feedback into user problems and requirements.
 - **`code-essence`** — Identify coding practices and conventions in code.
 - **`architecture-essence`** — Explain system components, responsibilities, and relationships.
+- **`game-design-essence`** — Extract player fantasy, gameplay loop, progression, systems, and design intent from game docs.
 - **`decision-essence`** — Explain a decision, the options considered, and the rationale.
 - **`risk-essence`** — Surface risks, trade-offs, and failure modes.
 - **`validation-essence`** — Assess the strength and coverage of tests or other validation evidence.

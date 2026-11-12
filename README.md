@@ -54,6 +54,8 @@ Use the code-essence skill on this repository and explain the main coding patter
 | `decision-essence` | Capture the decision being made, options considered, and reasoning behind the chosen path. |
 | `policy-essence` | Reduce policies or compliance documents to rules, obligations, exceptions, and enforcement points. |
 | `architecture-essence` | Extract system components, responsibilities, and relationships from code or design documents. |
+| `web-design-essence` | Analyze a webpage or interface for hierarchy, layout, flow, and overall user experience. |
+| `game-design-essence` | Extract the core player fantasy, gameplay loop, progression, and design intent from game design materials. |
 | `user-need-essence` | Turn interviews, tickets, and feedback into the underlying user problems and requirements. |
 | `stock-essence` | Extract financial trends, business drivers, and market context from earnings reports and related commentary. |
 | `validation-essence` | Assess whether a project, change, or claim is supported by meaningful tests, checks, and validation evidence. |
@@ -71,6 +73,8 @@ Some skills cover adjacent topics. Use the one that matches the main question:
 - **`master-essence`:** Use this if you are unsure which skill fits or want automatic routing. It selects the best fit and carries out the task, asking for clarification only when needed.
 - **`vanilla-essence` or `research-essence`:** Use `vanilla-essence` to summarize one document. Use `research-essence` to synthesize findings across sources, including disagreements and uncertainty. For interviews or feedback, use `user-need-essence` to identify user problems and requirements.
 - **`code-essence` or `architecture-essence`:** Use `code-essence` to identify coding practices and conventions. Use `architecture-essence` to explain system components, responsibilities, and interactions.
+- **`web-design-essence` or `game-design-essence`:** Use `web-design-essence` to evaluate page hierarchy, layout, interaction flow, and interface intent. Use `game-design-essence` to extract player fantasy, loops, progression, and system design from game docs.
+- **`game-design-essence` or `user-need-essence`:** Use `game-design-essence` to extract gameplay fantasy, loops, progression, and design intent from game docs. Use `user-need-essence` for broader player or user needs outside a game-design context.
 - **`decision-essence`, `risk-essence`, or `architecture-essence`:** Use `decision-essence` to explain a choice and its rationale, `risk-essence` to assess uncertainties and failure modes, and `architecture-essence` to describe system structure.
 - **`risk-essence`, `security-essence`, or `safe-ai-essence`:** Use `risk-essence` for broad project or proposal risks, `security-essence` for system assets, threats, and security controls, and `safe-ai-essence` for AI-specific harms, safeguards, intended use, and governance.
 - **`policy-essence` or `safe-ai-essence`:** Use `policy-essence` for general rules, obligations, and exceptions. Use `safe-ai-essence` for safety practices and remaining risks in AI systems; use both when assessing an AI system against a policy.
