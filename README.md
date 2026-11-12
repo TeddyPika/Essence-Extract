@@ -6,8 +6,6 @@
   **Evidence-first workflows for Claude Code.**
 
   Turn incident logs, codebases, decisions, and product evidence into clear HTML reports with inline SVG, optional Three.js visuals, and embedded structured data.
-
-  [View the interactive site](index.html) · [Browse the embedded-data schema](schemas/essence-output.schema.json) · [See the incident report](samples/incident-report.html)
 </div>
 
 ## Why use it
