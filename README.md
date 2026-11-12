@@ -51,11 +51,13 @@ Use the code-essence skill on this repository and explain the main coding patter
 | `metrics-essence` | Interpret KPI levels and trends while accounting for metric definitions, context, and limitations. |
 | `incident-essence` | Summarize incident impact, timeline, contributing factors, response, and follow-up actions. |
 | `rubric-essence` | Clarify evaluation criteria, scoring levels, rules, and ambiguities in a rubric. |
+| `master-essence` | Help users who are unsure which Essence skill to use by clarifying their goal and recommending a fit. |
 
 ## Choosing Between Related Skills
 
 Some skills cover adjacent topics. Use the one that matches the main question:
 
+- **`master-essence`:** Use this as a starting point if you are unsure which skill fits. It asks about your goal and recommends a skill and prompt.
 - **`vanilla-essence` or `research-essence`:** Use `vanilla-essence` to summarize one document. Use `research-essence` to synthesize findings across sources, including disagreements and uncertainty. For interviews or feedback, use `user-need-essence` to identify user problems and requirements.
 - **`code-essence` or `architecture-essence`:** Use `code-essence` to identify coding practices and conventions. Use `architecture-essence` to explain system components, responsibilities, and interactions.
 - **`decision-essence`, `risk-essence`, or `architecture-essence`:** Use `decision-essence` to explain a choice and its rationale, `risk-essence` to assess uncertainties and failure modes, and `architecture-essence` to describe system structure.
