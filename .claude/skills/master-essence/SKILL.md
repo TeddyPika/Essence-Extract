@@ -29,6 +29,7 @@ Help the user find the right Essence skill when they are unsure what to ask or w
 - **`roi-essence`** — Assess costs, benefits, ROI, break-even, or payback.
 - **`stock-essence`** — Summarize a company's financial performance and relevant market context.
 - **`incident-essence`** — Summarize an incident's impact, timeline, contributing factors, and follow-up.
+- **`root-cause-essence`** — Analyze the evidence for underlying and contributing causes of a failure.
 - **`security-essence`** — Describe security assets, threats, controls, and gaps.
 - **`safe-ai-essence`** — Examine AI safety goals, safeguards, harms, and residual risks.
 - **`policy-essence`** — Extract a policy's rules, obligations, exceptions, and enforcement.

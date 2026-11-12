@@ -50,6 +50,7 @@ Use the code-essence skill on this repository and explain the main coding patter
 | `research-essence` | Synthesize the main findings, evidence, and uncertainty from research materials and source documents. |
 | `metrics-essence` | Interpret KPI levels and trends while accounting for metric definitions, context, and limitations. |
 | `incident-essence` | Summarize incident impact, timeline, contributing factors, response, and follow-up actions. |
+| `root-cause-essence` | Trace a failure's underlying and contributing causes, separating evidence from hypotheses. |
 | `rubric-essence` | Clarify evaluation criteria, scoring levels, rules, and ambiguities in a rubric. |
 | `master-essence` | Help users who are unsure which Essence skill to use by clarifying their goal and recommending a fit. |
 
@@ -66,6 +67,7 @@ Some skills cover adjacent topics. Use the one that matches the main question:
 - **`roi-essence` or `stock-essence`:** Use `roi-essence` for an investment or project's costs, benefits, and returns. Use `stock-essence` for a company's revenue performance and related business or market context.
 - **`validation-essence` or `security-essence`:** Use `validation-essence` to assess whether tests or checks provide convincing evidence. Use `security-essence` to assess the security posture itself.
 - **`metrics-essence` or `stock-essence`:** Use `metrics-essence` to interpret a set of measures or KPIs. Use `stock-essence` for company revenue performance and related business or market context.
+- **`incident-essence` or `root-cause-essence`:** Use `incident-essence` for the overall incident story, impact, response, and follow-up. Use `root-cause-essence` to analyze why a failure occurred and how strong the causal evidence is.
 
 ## License
 
